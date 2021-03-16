@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
               ),
               subtitle1: TextStyle(
                 fontFamily: 'OpenSans',
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.normal,
                 fontSize: 14,
               ),
             ),
