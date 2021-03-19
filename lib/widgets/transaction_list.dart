@@ -15,24 +15,26 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return transactions.isEmpty
-        ? Column(
-            children: <Widget>[
-              Text(
-                'No transactions added yet!',
-                style: Theme.of(context).textTheme.headline1,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                height: 200,
-                child: Image.asset(
-                  'assets/images/waiting.png',
-                  fit: BoxFit.cover,
+        ? LayoutBuilder(builder: (ctx, constraints) {
+            return Column(
+              children: <Widget>[
+                Text(
+                  'No transactions added yet!',
+                  style: Theme.of(context).textTheme.headline1,
                 ),
-              ),
-            ],
-          )
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  height: constraints.maxHeight * 0.6,
+                  child: Image.asset(
+                    'assets/images/waiting.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ],
+            );
+          })
         : ListView.builder(
             itemBuilder: (ctx, index) {
               return Card(
@@ -56,15 +58,22 @@ class TransactionList extends StatelessWidget {
                     DateFormat.yMMMd().format(transactions[index].date),
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
-                  trailing: IconButton(
-                    icon: Icon(
-                      Icons.delete,
-                    ),
-                    color: Theme.of(context).errorColor,
-                    //by default, onpressed doesn't pass any arguments
-                    //solution: pass it an anonymous fx which can take args
-                    onPressed: () => deleteTx(transactions[index].id),
-                  ),
+                  trailing: MediaQuery.of(context).size.width > 460
+                      ? FlatButton.icon(
+                          textColor: Theme.of(context).errorColor,
+                          icon: Icon(Icons.delete),
+                          label: Text('Delete'),
+                          onPressed: () => deleteTx(transactions[index].id),
+                        )
+                      : IconButton(
+                          icon: Icon(
+                            Icons.delete,
+                          ),
+                          color: Theme.of(context).errorColor,
+                          //by default, onpressed doesn't pass any arguments
+                          //solution: pass it an anonymous fx which can take args
+                          onPressed: () => deleteTx(transactions[index].id),
+                        ),
                 ),
               );
             },
