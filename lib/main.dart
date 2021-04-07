@@ -141,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         : AppBar(
             title: Text(
-              'Expense Tracker',
+              'Expense Tracker!',
             ),
             actions: <Widget>[
               IconButton(
